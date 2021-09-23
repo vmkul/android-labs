@@ -15,39 +15,64 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.orderButton.setOnClickListener{ displayOrder() }
+        binding.orderButton.setOnClickListener { displayOrder() }
     }
 
-    private fun displayOrder() {
-        val pizzaName = binding.pizzaName.text
-
-        if (pizzaName.isEmpty()) {
-            Toast.makeText(applicationContext, "Please enter pizza name!", Toast.LENGTH_SHORT).show()
-            binding.orderResult.text = ""
-            return
-        }
-
-        val pizzaSize = when (binding.sizeLayout.checkedRadioButtonId) {
+    private fun getPizzaSize(): String {
+        return when (binding.sizeLayout.checkedRadioButtonId) {
             R.id.size_small -> "Small"
             R.id.size_medium -> "Medium"
             else -> "Large"
         }
+    }
 
-        val pizzaThickness = when (binding.thicknessLayout.checkedRadioButtonId) {
+    private fun getPizzaThickness(): String {
+        return when (binding.thicknessLayout.checkedRadioButtonId) {
             R.id.thickness_standard -> "Standard"
             else -> "Thin"
         }
+    }
 
-        var result = "Ordered pizza: $pizzaName\nSize: $pizzaSize\nThickness: $pizzaThickness\nExtras:\n"
+    private fun getExtras(): String {
+        var res = ""
 
         for (option in binding.additionalLayout.children) {
             if (option is CheckBox) {
                 if (option.isChecked) {
-                    result += "${option.text}\n"
+                    res += "${option.text}\n"
                 }
             }
         }
 
-        binding.orderResult.text = result
+        return res
+    }
+
+    private fun generateOrderText(): String {
+        val pizzaName = binding.pizzaName.text
+        val pizzaSize = getPizzaSize()
+        val pizzaThickness = getPizzaThickness()
+
+        if (pizzaName.isEmpty()) {
+            return ""
+        }
+
+        var result =
+            "Ordered pizza: $pizzaName\nSize: $pizzaSize\nThickness: $pizzaThickness\nExtras:\n"
+        result += getExtras()
+
+        return result
+    }
+
+    private fun displayOrder() {
+        val orderText = generateOrderText()
+
+        if (orderText.isEmpty()) {
+            Toast.makeText(applicationContext, "Please enter pizza name!", Toast.LENGTH_SHORT)
+                .show()
+            binding.orderResult.text = ""
+            return
+        }
+
+        binding.orderResult.text = orderText
     }
 }
