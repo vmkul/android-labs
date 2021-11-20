@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/order_pizza"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/pizza_name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/pizza_name"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_title" />
+
+    <TextView
+        android:id="@+id/choose_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pizza_name" />
+
+    <RadioGroup
+        android:id="@+id/size_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/size_small"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/choose_size">
+
+        <RadioButton
+            android:id="@+id/size_small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/small" />
+
+        <RadioButton
+            android:id="@+id/size_medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/medium" />
+
+        <RadioButton
+            android:id="@+id/size_large"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/large" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/choose_thickness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_thickness"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/size_layout" />
+
+
+    <RadioGroup
+        android:id="@+id/thickness_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checkedButton="@id/thickness_standard"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/choose_thickness">
+
+        <RadioButton
+            android:id="@+id/thickness_standard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/standard" />
+
+        <RadioButton
+            android:id="@+id/thickness_thin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/thin" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/choose_additional"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/additional_ingredients"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thickness_layout" />
+
+    <LinearLayout
+        android:id="@+id/additional_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/choose_additional">
+
+        <CheckBox
+            android:id="@+id/extra_cheese"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/extra_cheese" />
+
+        <CheckBox
+            android:id="@+id/add_mushrooms"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/add_mushrooms" />
+
+        <CheckBox
+            android:id="@+id/add_pineapple"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/add_pineapple" />
+
+        <CheckBox
+            android:id="@+id/spicy_sauce"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="@string/spicy_sauce" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/order_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/make_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/additional_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
