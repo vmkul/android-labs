@@ -2,23 +2,10 @@ package com.example.pizzaorder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.CheckBox
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-
-
-import android.view.ViewGroup
-
-import android.view.LayoutInflater
-import android.view.View
-import androidx.core.os.bundleOf
 import androidx.core.view.children
-import androidx.fragment.app.setFragmentResult
 import com.example.pizzaorder.databinding.ActivityMainBinding
-import com.example.pizzaorder.databinding.OrderResultBinding
-import com.example.pizzaorder.databinding.PizzaInputBinding
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -28,54 +15,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager
-            .setFragmentResultListener("orderButtonPressed", this) { requestKey, bundle ->
-                val result = bundle.getString("orderText")
-
-                if (result != null) {
-                    displayOrder(result)
-                }
-            }
-    }
-
-    private fun displayOrder(orderText: String) {
-        val fragment : OrderResultFragment = supportFragmentManager.findFragmentById(R.id.order_result_container) as OrderResultFragment;
-
-        if (orderText.isEmpty()) {
-            Toast.makeText(applicationContext, "Please enter pizza name!", Toast.LENGTH_SHORT)
-                .show()
-            fragment.setText("");
-            return
-        }
-
-        fragment.setText(orderText)
-    }
-}
-
-class PizzaInputFragment : Fragment(R.layout.pizza_input) {
-    private var _binding: PizzaInputBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = PizzaInputBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.orderButton.setOnClickListener {
-            val result = generateOrderText()
-            setFragmentResult("orderButtonPressed", bundleOf("orderText" to result))
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        binding.orderButton.setOnClickListener { displayOrder() }
     }
 
     private fun getPizzaSize(): String {
@@ -122,22 +62,17 @@ class PizzaInputFragment : Fragment(R.layout.pizza_input) {
 
         return result
     }
-}
 
-class OrderResultFragment : Fragment(R.layout.order_result) {
-    private var _binding: OrderResultBinding? = null
-    private val binding get() = _binding!!
+    private fun displayOrder() {
+        val orderText = generateOrderText()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = OrderResultBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        if (orderText.isEmpty()) {
+            Toast.makeText(applicationContext, "Please enter pizza name!", Toast.LENGTH_SHORT)
+                .show()
+            binding.orderResult.text = ""
+            return
+        }
 
-    fun setText(text: String) {
-        binding.orderResult.text = text
+        binding.orderResult.text = orderText
     }
 }
