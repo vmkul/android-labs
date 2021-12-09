@@ -13,12 +13,21 @@ import java.lang.Exception
 
 class DataActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDataBinding
-    private val DATA_FILE_NAME = "order.txt"
+    private lateinit var dataFileManager: FileManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val extras = intent.extras
+        if (extras != null) {
+            val filename = extras.getString("dataFilename")
+
+            if (filename != null) {
+                dataFileManager = FileManager(filename, applicationContext)
+            }
+        }
     }
 
     override fun onStart() {
@@ -27,30 +36,16 @@ class DataActivity : AppCompatActivity() {
     }
 
     private fun getOrderText(): String {
-        val fileInputStream: InputStream
-        try {
-            fileInputStream = openFileInput(DATA_FILE_NAME)
-        } catch (e: Exception) {
+        if (!this::dataFileManager.isInitialized) {
             return "There is no order data stored"
         }
 
-        val inputStreamReader = InputStreamReader(fileInputStream)
-        val bufferedReader = BufferedReader(inputStreamReader)
-        val stringBuilder: StringBuilder = StringBuilder()
-        var text: String?
-        while (run {
-                text = bufferedReader.readLine()
-                text
-            } != null) {
-            stringBuilder.append(text + "\n")
-        }
-
-        val res = stringBuilder.toString()
-
-        return if (res.isEmpty()) {
+        return try {
+            val res = dataFileManager.readFileContent()
+            if (res.isEmpty()) "There is no order data stored"
+            else res
+        } catch (e: Exception) {
             "There is no order data stored"
-        } else {
-            res
         }
     }
 }

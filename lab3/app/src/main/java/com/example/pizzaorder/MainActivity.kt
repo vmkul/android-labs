@@ -1,7 +1,6 @@
 package com.example.pizzaorder
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -12,12 +11,14 @@ import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val DATA_FILE_NAME = "order.txt"
+    private val dataFileName = "order.txt"
+    private lateinit var fileManager: FileManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        fileManager = FileManager(dataFileName, applicationContext)
 
         supportFragmentManager
             .setFragmentResultListener("orderButtonPressed", this) { requestKey, bundle ->
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .setFragmentResultListener("viewButtonPressed", this) { _, _ ->
                 val switchActivityIntent = Intent(this, DataActivity::class.java)
+                switchActivityIntent.putExtra("dataFilename", dataFileName)
                 startActivity(switchActivityIntent)
             }
     }
@@ -52,8 +54,7 @@ class MainActivity : AppCompatActivity() {
     private fun saveOrderToFile(orderText: String) {
         if (orderText.isEmpty()) return
         try {
-            val fileOutputStream = openFileOutput(DATA_FILE_NAME, Context.MODE_PRIVATE)
-            fileOutputStream.write(orderText.toByteArray())
+            fileManager.writeToFile(orderText)
         } catch (e: Exception) {
             Toast.makeText(applicationContext, "Error: couldn't save your order!", Toast.LENGTH_SHORT)
                 .show()
