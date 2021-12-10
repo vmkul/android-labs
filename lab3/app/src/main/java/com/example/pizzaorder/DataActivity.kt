@@ -30,8 +30,8 @@ class DataActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         binding.orderData.text = getOrderText()
     }
 
