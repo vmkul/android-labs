@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">lab4</string>
+    <string name="play_video">Play Video</string>
+    <string name="play_audio">Play Audio</string>
+    <string name="play_online_resource">Media source</string>
+    <string name="play_online_media">Play online media</string>
+    <string-array name="mediaFiles">
+        <item>Audio1</item>
+        <item>Audio2</item>
+        <item>Video1</item>
+        <item>Video2</item>
+    </string-array>
+</resources>
