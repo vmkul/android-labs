@@ -4,6 +4,7 @@
     <string name="play_audio">Play Audio</string>
     <string name="play_online_resource">Media source</string>
     <string name="play_online_media">Play online media</string>
+    <string name="media_player">Media Player</string>
     <string-array name="mediaFiles">
         <item>Audio1</item>
         <item>Audio2</item>
